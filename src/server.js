@@ -8,20 +8,23 @@ import cors from "cors";
 class Server {
     constructor() {
         dotenv.config();
-        this.app = express();
-        this.router = Router();
-        
-        this.config();
         this.connection = connect(process.env.CONNECTION_STRING,
             { useUnifiedTopology: true, useNewUrlParser: true },
-            () => console.log("Connected to MongoDB."));
-        this.dayRoutes = new DayRoutes();
-        this.app.use(cors());
-        this.dayRoutes.routes(this.router); 
-        updateFromEndpoint()
-        this.app.use("/api/v1", this.router);
-        this.app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`));
-        setInterval(updateFromEndpoint, 5 * 60 * 1000);
+            () => {
+                console.log("Connected to MongoDB.");
+                updateFromEndpoint();
+                this.app = express();
+                this.router = Router();
+                this.config();
+                
+                this.dayRoutes = new DayRoutes();
+                this.app.use(cors());
+                this.dayRoutes.routes(this.router); 
+                this.app.use("/api/v1", this.router);
+                this.app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`));
+                setInterval(updateFromEndpoint, 5 * 60 * 1000);
+        });
+        
     }
 
     config() {
