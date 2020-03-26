@@ -1,15 +1,11 @@
 import { model } from "mongoose";
 import DayModel from "../models/DayModel";    
-
-class DayController {
-    constructor() {
-        this.DailyInfections = model('dailyinfections', DayModel)
-    }
-
+const DailyInfections = model('dailyinfections', DayModel)
+export class DayController {
     async getAllData (req, res) {
-        let data = await this.DailyInfections.find({"states.name": req.params.stateName}).exec();
+        let data = await DailyInfections.find({}).exec();
         
-        return data;
+        res.json(data);
     }
 }
 

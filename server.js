@@ -1,17 +1,33 @@
 // Followed from https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd
 
-const Express = require('express');
+import express, { Router } from "express";
+import { DayRoutes } from "./app/routes/DayRoutes"
 require("dotenv").config();
-
-let port = 6050;
-const app = Express();
-const routes = require('./app/routes/DayRoutes');
+const mongoose = require('mongoose');
 const onStartModules = require('./app/modules/updateData');
-var mongoose = require('mongoose');
+import bodyParser from "body-parser";
 
-const uri = process.env.CONNECTION_STRING;
-mongoose.connect(uri);
+class Server {
+    constructor() {
+        this.app = express();
+        this.router = Router();
+        this.config();
+        this.connection = mongoose.connect(process.env.CONNECTION_STRING,
+            { useUnifiedTopology: true, useNewUrlParser: true },
+            () => console.log("Connected to MongoDB."));
+        this.dayRoutes = new DayRoutes();
 
-onStartModules.updateFromEndpoint();
+        onStartModules.updateFromEndpoint();
+        this.dayRoutes.routes(this.router);        
+        this.app.use("/api/v1", this.router);
+        this.app.listen(8080 || process.env.PORT, () => console.log(`Listening on port ${8080}`));
+    }
 
-app.listen(port || process.env.PORT, () => console.log(`Listening on port ${port}`));
+    config() {
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+    }
+}
+
+
+export default new Server().app;

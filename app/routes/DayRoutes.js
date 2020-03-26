@@ -1,13 +1,13 @@
 import DayController from "../controllers/DayController";
 
-class DayRoutes {
+export class DayRoutes {
     constructor() {
         this.day = new DayController()
     }
     routes(router) {
+        console.log('registering');
         router.route('/')
-            .get(this.day.getAllData)
+            .get(this.day.getAllData);
     }
 }
 
-export default DayRoutes
