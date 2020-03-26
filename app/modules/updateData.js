@@ -21,7 +21,7 @@ exports.updateFromEndpoint = async () => {
 
     if (databaseData.length && sameDay(new Date(databaseData[0].date), new Date(time))) {
         databaseData[0].update({}, newDay);
-        console.log("inserted.");
+        console.log("update");
     } else {
         newDay.save();
         console.log("separate day. new day inserted.");
