@@ -1,7 +1,7 @@
 import { model } from "mongoose";
 import DayModel from "../models/DayModel";    
 import { populateDatabaseCompletely, deleteDatabase } from "../modules/updateData"
-const DailyInfections = model('dailyinfections', DayModel)
+const DailyInfections = model('dailyinfections', DayModel);
 export class DayController {
     async getAllData (req, res) {
         let data = await DailyInfections.find({}).exec();

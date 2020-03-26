@@ -5,11 +5,9 @@ export class DayRoutes {
         this.day = new DayController()
     }
     routes(router) {
-        console.log('registering');
+        console.log('Registering routes.');
         router.route('/')
             .get(this.day.getAllData)
-            .post(this.day.populateFullDatabase)
-            .delete(this.day.deleteDatabase)
     }
 }
 

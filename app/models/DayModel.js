@@ -5,6 +5,6 @@ let DayModel = new Schema({
     confirmed: Number,
     deaths: Number,
     recoveries: Number
-})
+});
 
 export default DayModel;

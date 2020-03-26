@@ -1,6 +1,6 @@
 import DayModel from "../models/DayModel";
 import { model } from "mongoose";
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
 exports.updateFromEndpoint = async () => {
     var dayModel = model("dailyinfections", DayModel);
