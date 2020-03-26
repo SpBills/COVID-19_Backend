@@ -7,7 +7,9 @@ export class DayRoutes {
     routes(router) {
         console.log('registering');
         router.route('/')
-            .get(this.day.getAllData);
+            .get(this.day.getAllData)
+            .post(this.day.populateFullDatabase)
+            .delete(this.day.deleteDatabase)
     }
 }
 

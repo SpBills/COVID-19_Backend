@@ -8,8 +8,8 @@ exports.updateFromEndpoint = async () => {
     let databaseData = await dayModel.find().sort({ _id: -1 }).limit(1).exec();
     let endpointData = await fetch("https://wuflu.banic.stream/john_hopkins_csse_data.json");
     let endpointJson = await endpointData.json();
-    let areas = endpointJson.timestamped_data[0].areas;
-    let time = endpointJson.timestamped_data[0].date;
+    let areas = nextData.areas;
+    let time = nextData.date;
     let us = areas.filter(areas => areas.name === "US");
     let newDay = new dayModel({
         date: Date.parse(time),
@@ -23,7 +23,6 @@ exports.updateFromEndpoint = async () => {
         databaseData[0].update({}, newDay);
         console.log("update");
     } else {
-        newDay.save();
         console.log("separate day. new day inserted.");
     }
 
