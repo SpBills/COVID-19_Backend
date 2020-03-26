@@ -6,7 +6,6 @@ require("dotenv").config();
 const mongoose = require('mongoose');
 const onStartModules = require('./app/modules/updateData');
 import bodyParser from "body-parser";
-var CronJob = require("cron").CronJob; 
 const cors = require('cors');
 class Server {
     constructor() {
@@ -20,10 +19,10 @@ class Server {
         this.dayRoutes = new DayRoutes();
         this.app.use(cors());
         this.dayRoutes.routes(this.router); 
-        var job = new CronJob("* */5 * * * *", onStartModules.updateFromEndpoint(), console.log("Updated from endpoint."));
-        job.start();
+        onStartModules.updateFromEndpoint()
         this.app.use("/api/v1", this.router);
         this.app.listen(8070 || process.env.PORT, () => console.log(`Listening on port ${8070}`));
+        setInterval(onStartModules.updateFromEndpoint, 5 * 60 * 1000);
     }
 
     config() {
