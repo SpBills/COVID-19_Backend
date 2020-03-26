@@ -20,7 +20,7 @@ class Server {
         this.dayRoutes.routes(this.router); 
         updateFromEndpoint()
         this.app.use("/api/v1", this.router);
-        this.app.listen(8070 || process.env.PORT, () => console.log(`Listening on port ${8070}`));
+        this.app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`));
         setInterval(updateFromEndpoint, 5 * 60 * 1000);
     }
 
