@@ -1,0 +1,6 @@
+# action.yml
+name: 'Docker Package'
+description: 'Package Express in to Docker'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
