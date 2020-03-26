@@ -1,5 +1,6 @@
-# COVID-19 Backend
-This API is already deployed, however the IP is not publicly accessible yet.
+# COVID-19 Backend API Boilerplate
+This is a boilerplate API using Mongoose and ExpressJS. (Most was coded in a rush past 10:00 PM. Sorry for the bad code.)
+This API is already deployed for the United States, however the IP is not publicly accessible yet.
 
 ## How to use for your country:
 If you want to use this for a different country, just create a new MongoDB collection with the name "dailyinfections" and put the connection string in the .env file.
