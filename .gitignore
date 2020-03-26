@@ -1,2 +1,4 @@
 node_modules
 .env
+*.jar
+.git.bfg-report
