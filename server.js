@@ -20,8 +20,7 @@ class Server {
         this.dayRoutes = new DayRoutes();
         this.app.use(cors());
         this.dayRoutes.routes(this.router); 
-        onStartModules.updateFromEndpoint();
-        var job = new CronJob("* * * * */5 *", onStartModules.updateFromEndpoint(), console.log("Updated from endpoint."), null, true, "America/Los_Angeles");
+        var job = new CronJob("* */5 * * * *", onStartModules.updateFromEndpoint(), console.log("Updated from endpoint."));
         job.start();
         this.app.use("/api/v1", this.router);
         this.app.listen(8070 || process.env.PORT, () => console.log(`Listening on port ${8070}`));
