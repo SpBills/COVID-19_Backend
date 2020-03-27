@@ -2,3 +2,7 @@ node_modules
 .env
 *.jar
 .git.bfg-report
+dist
+*.cmd
+*.ps1
+publish.zip

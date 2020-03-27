@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel src --out-dir dist && node dist/server.js"
+    "start": "babel-node src/server.js",
+    "build": "babel src --out-dir dist"
   },
   "author": "",
   "license": "ISC",
@@ -13,15 +14,19 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "esm": "^3.2.25",
     "express": "^4.17.1",
     "mongoose": "^5.6.4",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
+    "esm": "^3.2.25",
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "@babel/node": "^7.8.7",
-    "@babel/preset-env": "^7.9.0"
+    "@babel/preset-env": "^7.9.0",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "gulp-babel": "^8.0.0"
   }
 }
