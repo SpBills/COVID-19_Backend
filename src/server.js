@@ -9,7 +9,7 @@ class Server {
     constructor() {
         dotenv.config();
         this.connection = connect(process.env.CONNECTION_STRING,
-            { useUnifiedTopology: true, useNewUrlParser: true },
+            { useUnifiedTopology: false, useNewUrlParser: true },
             () => {
                 console.log("Connected to MongoDB.");
                 updateFromEndpoint();

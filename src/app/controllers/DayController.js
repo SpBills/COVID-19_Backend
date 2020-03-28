@@ -19,6 +19,18 @@ export class DayController {
         deleteDatabase();
         res.json({message: "Completed."})
     }
+
+    async getDataByArea (req, res) {
+        let days = await DailyInfections.find().exec();
+        const final = [];
+        days.map(day => {
+            final.push({
+                date: day.date,
+                data: day.areas.filter(area => area.name === req.params.area)[0]
+            })
+        })
+        res.json(final);
+    }
 }
 
 

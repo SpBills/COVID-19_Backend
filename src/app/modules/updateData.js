@@ -6,9 +6,8 @@ exports.updateFromEndpoint = async () => {
 	var dayModel = model("alldailyinfections", DayModel);
 
 	let databaseData = await dayModel
-		.find()
+		.findOne()
 		.sort({ _id: -1 })
-		.limit(1)
 		.exec();
 	let endpointData = await fetch(
 		"https://wuflu.banic.stream/john_hopkins_csse_data.json"
@@ -17,7 +16,6 @@ exports.updateFromEndpoint = async () => {
 	let dataAreas = endpointJson.timestamped_data[0].areas;
 	let time = endpointJson.timestamped_data[0].date;
 	const requests = dataAreas.map(async area => {
-		console.log(area);
 		if (area.stats) {
 			return {
 				name: area.name,
@@ -47,19 +45,20 @@ exports.updateFromEndpoint = async () => {
 			};
 		}
 	})
-	let newDay;
 	const results = await Promise.all(requests);
-	newDay = new dayModel({
-		date: Date.parse(time),
+	let newDayObject = {
+		date: time,
 		areas: results
-	})
+	}
+	let newDay = new dayModel(newDayObject);
 	
-	if (databaseData.length && sameDay(new Date(databaseData[0].date), new Date(time))) {
-		dayModel.updateOne({date: Date.parse(time)}, newDay);
-		console.log(`Updated at timestamp: ${databaseData[0].date}`)
+	if (databaseData && sameDay(new Date(databaseData.date), new Date(time))) {
+		let data = dayModel.updateOne({date: databaseData.date}, newDayObject, {upsert: true});
+		data.exec();
+		console.log(`Updated at timestamp: ${time}`)
 	} else {
 		newDay.save();
-		console.log(`SAVED at timestamp: ${databaseData[0].date}`)
+		console.log(`SAVED at timestamp: ${time}`)
 	}
 };
 

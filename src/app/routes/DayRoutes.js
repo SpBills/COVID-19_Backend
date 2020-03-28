@@ -8,6 +8,9 @@ export class DayRoutes {
         console.log('Registering routes.');
         router.route('/')
             .get(this.day.getAllData)
+
+        router.route('/:area')
+            .get(this.day.getDataByArea)
     }
 }
 
